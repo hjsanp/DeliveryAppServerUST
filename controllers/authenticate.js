@@ -34,7 +34,7 @@ exports.login = async (req, res, next) => {
 
         if (!user) return next(new ErrorResponse('Invalid credentials', 401))
 
-        const isMatched = await user.matchPassword(password)
+        const isMatched = await user.matchPasswords(password)
 
         if (!isMatched) return next(new ErrorResponse('Invalid credentials', 401))
 
