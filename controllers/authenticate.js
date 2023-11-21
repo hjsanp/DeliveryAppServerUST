@@ -16,7 +16,7 @@ exports.register = async (req, res, next) => {
 
         const user = await User.create({ password, firstName, lastName, phoneNumber, age, userImage: userImage.url })
         console.log(`User ${firstName} is registered!`)
-        res.status(201).json({ userId: user._id, isDoctor: user.isDoctor, email, phoneNumber, firstName, lastName, userImage: userImage.url })
+        res.status(201).json({ userId: user._id, phoneNumber, firstName, lastName, userImage: userImage.url })
 
     } catch (err) {
         next(err)
