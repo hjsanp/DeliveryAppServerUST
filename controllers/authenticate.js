@@ -14,7 +14,7 @@ exports.register = async (req, res, next) => {
     try {
         const userImage = await cloudinary.uploader.upload(imageURI, { folder: 'Navsafe' })
 
-        const user = await User.create({ email, password, firstName, lastName, phoneNumber, age, userImage: userImage.url })
+        const user = await User.create({ password, firstName, lastName, phoneNumber, age, userImage: userImage.url })
         console.log(`User ${firstName} is registered!`)
         res.status(201).json({ userId: user._id, isDoctor: user.isDoctor, email, phoneNumber, firstName, lastName, userImage: userImage.url })
 
