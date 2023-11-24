@@ -5,7 +5,7 @@ const connectMongoDB = require('./utils/connectDB')
 const errorHandler = require('./middleware/errorHandler')
 const cors = require('cors')
 
-connectMongoDB()
+
 
 app.use(express.json({ limit: '100mb' }))
 app.use(express.urlencoded({ limit: '100mb' }));
@@ -24,4 +24,5 @@ app.use(errorHandler)
 
 const PORT = process.env.PORT || 3000
 
-app.listen(PORT, () => console.log(`Server is running on port ${PORT}`))
+connectMongoDB()
+    .then(() => app.listen(PORT, () => console.log(`Server is running on port ${PORT}`)))
