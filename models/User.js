@@ -41,25 +41,20 @@ const UserSchema = new mongoose.Schema({
             },
         }
     ],
-    orders: [
-        {
-            restaurantName: String,
-            address: String,
-            totalPrice: Number,
-            dateOrdered: Date,
-            dateDelivered: Date,
-            items: [
-                {
-                    foodName: String,
-                    description: String,
-                    image: String,
-                    unitPrice: Number,
-                    qty: Number,
-                    price: Number
-                }
-            ]
-        }
-    ]
+    orders: []
+    // {
+    //     name: String,
+    //     totalItems: Number,
+    //     totalPrice: Number,
+    //     dateOrdered: Date,
+    //     dateDelivered: Date,
+    //     deliverTo: {
+    //         address: String,
+    //         name: String
+    //     },
+    //     qty: {},
+    //     items: []
+    // }
 })
 
 UserSchema.pre('save', async function (next) {
