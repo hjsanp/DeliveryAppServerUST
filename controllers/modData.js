@@ -20,7 +20,8 @@ exports.getAddresses = async (req, res, next) => {
     const { userId } = req.body
     try {
         const user = await User.findById(userId)
-        res.status(200).json(user.addresses)
+        console.log(user.addresses)
+        res.status(200).json(user?.addresses)
     } catch (err) {
         next(err)
         console.log(err)
