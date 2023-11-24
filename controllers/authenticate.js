@@ -16,7 +16,7 @@ exports.register = async (req, res, next) => {
         const isSenior = age >= 60
         const user = await User.create({ password, firstName, lastName, phoneNumber, age, userImage: userImage.url, isSenior })
         console.log(`User ${firstName} is registered!`)
-        res.status(201).json({ userId: user._id, phoneNumber, firstName, lastName, userImage: userImage.url, age })
+        res.status(201).json({ userId: user._id, phoneNumber, firstName, lastName, userImage: userImage.url, age, isSenior })
 
     } catch (err) {
         next(err)
@@ -44,7 +44,8 @@ exports.login = async (req, res, next) => {
             lastName: user.lastName,
             phoneNumber: user.phoneNumber,
             userImage: user.userImage,
-            age: user.age
+            age: user.age,
+            isSenior: user.isSenior
         }
 
         console.log(`User ${profile.firstName} is logged in!`)
