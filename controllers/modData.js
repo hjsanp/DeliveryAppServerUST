@@ -29,12 +29,12 @@ exports.getAddresses = async (req, res, next) => {
     }
 }
 exports.submitOrder = async (req, res, next) => {
-    const { order } = req.body
+    const { order, userId } = req.body
     try {
-        const user = await User.findById(order.userId)
+        const user = await User.findById(userId)
         user.orders.push(order)
         const modUser = await user.save()
-        res.status(200).json(modeUser.orders)
+        res.status(200).json(modUser.orders)
     } catch (err) {
         next(err)
         console.log(err)
