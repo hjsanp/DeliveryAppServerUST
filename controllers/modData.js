@@ -12,6 +12,7 @@ exports.addAddress = async (req, res, next) => {
         res.status(200).json(modUser.addresses)
     } catch (err) {
         next(err)
+        console.log(err)
     }
 }
 
@@ -22,6 +23,7 @@ exports.getAddresses = async (req, res, next) => {
         res.status(200).json(user.addresses)
     } catch (err) {
         next(err)
+        console.log(err)
     }
 }
 exports.submitOrder = async (req, res, next) => {
@@ -33,6 +35,7 @@ exports.submitOrder = async (req, res, next) => {
         res.status(200).json(modeUser.orders)
     } catch (err) {
         next(err)
+        console.log(err)
     }
 }
 
@@ -43,5 +46,6 @@ exports.getOrders = async (req, res, next) => {
         res.status(200).json(user.orders)
     } catch (err) {
         next(err)
+        console.log(err)
     }
 }
