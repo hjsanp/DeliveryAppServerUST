@@ -13,10 +13,10 @@ exports.register = async (req, res, next) => {
     const { password, firstName, lastName, phoneNumber, imageURI, age } = req.body
     try {
         const userImage = await cloudinary.uploader.upload(imageURI, { folder: 'Navsafe' })
-
-        const user = await User.create({ password, firstName, lastName, phoneNumber, age, userImage: userImage.url })
+        const isSenior = age >= 60
+        const user = await User.create({ password, firstName, lastName, phoneNumber, age, userImage: userImage.url, isSenior })
         console.log(`User ${firstName} is registered!`)
-        res.status(201).json({ userId: user._id, phoneNumber, firstName, lastName, userImage: userImage.url })
+        res.status(201).json({ userId: user._id, phoneNumber, firstName, lastName, userImage: userImage.url, age })
 
     } catch (err) {
         next(err)
@@ -44,6 +44,7 @@ exports.login = async (req, res, next) => {
             lastName: user.lastName,
             phoneNumber: user.phoneNumber,
             userImage: user.userImage,
+            age: user.age
         }
 
         console.log(`User ${profile.firstName} is logged in!`)
