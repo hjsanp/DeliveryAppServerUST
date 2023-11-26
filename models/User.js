@@ -42,7 +42,11 @@ const UserSchema = new mongoose.Schema({
         }
     ],
     isSenior: Boolean,
-    favorites: Map,
+    favorites: {
+        type: Map,
+        of: {},
+        default: {}
+    },
     orders: []
     // {
     //     name: String,
