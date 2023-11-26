@@ -58,8 +58,8 @@ exports.addFavorite = async (req, res, next) => {
         const user = await User.findById(userId)
         // user.favorites.set(favorite.id, favorite)
         user.favorites.set(String(favorite.id), favorite)
-        await user.save()
-        res.status(200).json(user.favorites)
+        const updatedUser = await user.save()
+        res.status(200).json(updatedUser.favorites)
     } catch (err) {
         next(err)
         console.log(err)
