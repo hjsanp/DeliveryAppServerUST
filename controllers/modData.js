@@ -84,7 +84,6 @@ exports.editAddress = async (req, res, next) => {
         tmp.forEach((elm, idx) => {
             if (elm._id === address._id) {
                 tmp[idx] = address
-                return
             }
         })
         console.log(tmp)
