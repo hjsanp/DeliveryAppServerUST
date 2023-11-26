@@ -76,3 +76,37 @@ exports.getFavorites = async (req, res, next) => {
         console.log(err)
     }
 }
+exports.editAddress = async (req, res, next) => {
+    const { userId, address } = req.body
+    try {
+        const user = await User.findById(userId)
+        const tmp = [...user.addresses]
+        tmp.forEach((elm, idx) => {
+            if (elm._id === address._id) {
+                tmp[idx] = address
+                return
+            }
+        })
+        user.addresses = tmp
+        const updatedUser = user.save()
+        res.status(200).json(updatedUser.addresses)
+    } catch (err) {
+        next(err)
+        console.log(err)
+    }
+}
+exports.deleteAddress = async (req, res, next) => {
+    const { userId, address } = req.body
+    try {
+        const user = await User.findById(userId)
+        const filtered = user.addresses.filter(({ _id }) => _id != address._id)
+        user.addresses = filtered
+        const updatedUser = user.save()
+        res.status(200).json(updatedUser.addresses)
+    } catch (err) {
+        next(err)
+        console.log(err)
+    }
+}
+
+
