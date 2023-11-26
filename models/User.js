@@ -29,18 +29,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please provide a profile photo.']
     },
-    addresses: [
-        {
-            name: {
-                type: String,
-                required: [true, 'Please provide an address name.']
-            },
-            address: {
-                type: String,
-                required: [true, 'Please provide your address.']
-            },
-        }
-    ],
+    addresses: [],
     isSenior: Boolean,
     favorites: {
         type: Map,

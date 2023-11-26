@@ -87,6 +87,7 @@ exports.editAddress = async (req, res, next) => {
                 return
             }
         })
+        console.log(tmp)
         user.addresses = tmp
         const updatedUser = user.save()
         res.status(200).json(updatedUser.addresses)
@@ -99,7 +100,8 @@ exports.deleteAddress = async (req, res, next) => {
     const { userId, address } = req.body
     try {
         const user = await User.findById(userId)
-        const filtered = user.addresses.filter(({ _id }) => _id != address._id)
+        const filtered = user.addresses.filter((elm) => elm._id != address._id)
+        console.log(filtered)
         user.addresses = filtered
         const updatedUser = user.save()
         res.status(200).json(updatedUser.addresses)
