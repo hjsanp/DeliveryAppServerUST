@@ -52,11 +52,12 @@ exports.getOrders = async (req, res, next) => {
     }
 }
 
-exports.addFavorite = async (req, res, next) => {
+exports.toggleFavorite = async (req, res, next) => {
     const { userId, favorite } = req.body
     try {
         const user = await User.findById(userId)
         // user.favorites.set(favorite.id, favorite)
+        if (user.favorites.get(String(favorite.id))) favorite = false
         user.favorites.set(String(favorite.id), favorite)
         const updatedUser = await user.save()
         res.status(200).json(updatedUser.favorites)
