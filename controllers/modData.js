@@ -51,3 +51,25 @@ exports.getOrders = async (req, res, next) => {
         console.log(err)
     }
 }
+
+exports.addFavorite = async (req, res, next) => {
+    const { userId, favorite } = req.body
+    try {
+        const user = await User.findById(userId)
+        user.favorites.set(favorite.id, favorite)
+        res.status(200).json(user.favorites)
+    } catch (err) {
+        next(err)
+        console.log(err)
+    }
+}
+exports.getFavorites = async (req, res, next) => {
+    const { userId } = req.body
+    try {
+        const user = await User.findById(userId)
+        res.status(200).json(user.favorites)
+    } catch (err) {
+        next(err)
+        console.log(err)
+    }
+}
