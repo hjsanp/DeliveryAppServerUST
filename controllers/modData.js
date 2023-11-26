@@ -53,7 +53,7 @@ exports.getOrders = async (req, res, next) => {
 }
 
 exports.toggleFavorite = async (req, res, next) => {
-    const { userId, favorite } = req.body
+    let { userId, favorite } = req.body
     try {
         const user = await User.findById(userId)
         // user.favorites.set(favorite.id, favorite)
