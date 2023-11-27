@@ -77,19 +77,19 @@ exports.getFavorites = async (req, res, next) => {
     }
 }
 exports.editAddress = async (req, res, next) => {
-    const { userId, address } = req.body
+    const { userId, address, idx } = req.body
     try {
+
+
+        const updatedUser = await User.updateOne({ _id: userId },
+            {
+                $set: {
+                    [`addressses.&{idx}.name`]: address.name,
+                    [`addressses.&{idx}.address`]: address.address,
+                }
+            })
         const user = await User.findById(userId)
-        const tmp = [...user.addresses]
-        tmp.forEach((elm, idx) => {
-            if (elm._id === address._id) {
-                tmp[idx] = address
-            }
-        })
-        console.log(tmp)
-        user.addresses = tmp
-        const updatedUser = user.save()
-        res.status(200).json(updatedUser.addresses)
+        res.status(200).json(user.addresses)
     } catch (err) {
         next(err)
         console.log(err)
@@ -98,12 +98,11 @@ exports.editAddress = async (req, res, next) => {
 exports.deleteAddress = async (req, res, next) => {
     const { userId, address } = req.body
     try {
+        const updatedUser = await User.updateOne({ _id: userId }, {
+            $pull: { addresses: { _id: address._id } }
+        })
         const user = await User.findById(userId)
-        const filtered = user.addresses.filter((elm) => elm._id != address._id)
-        console.log(filtered)
-        user.addresses = filtered
-        const updatedUser = user.save()
-        res.status(200).json(updatedUser.addresses)
+        res.status(200).json(user.addresses)
     } catch (err) {
         next(err)
         console.log(err)
