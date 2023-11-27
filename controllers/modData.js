@@ -98,7 +98,7 @@ exports.editAddress = async (req, res, next) => {
                     [`addressses.${idx}.address`]: address.address,
                 }
             })
-        res.status(200).json(user.addresses)
+        res.status(200).json(updatedUser.addresses)
     } catch (err) {
         next(err)
         console.log(err)
