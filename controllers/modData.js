@@ -1,5 +1,6 @@
 const User = require('../models/User')
 const ErrorResponse = require('../utils/errorResponse')
+const mongoose = require('mongoose')
 
 
 
@@ -81,11 +82,22 @@ exports.editAddress = async (req, res, next) => {
     try {
 
         const user = await User.findById(userId)
-        const updatedUser = await user.updateOne({ addresses: { $elemMatch: { _id: address._id } } },
+        const tmp = [...user.addresses]
+        let idx = 0;
+        for (let i = 0; i < tmp.length; i++) {
+            if (tmp[i]._id === mongoose.Types.ObjectId(userId)) {
+                idx = i
+                break
+            }
+        }
+        const key1 = 'addresses.' + idx + '.name'
+        const key2 = 'addresses.' + idx + '.address'
+
+        const updatedUser = await User.updateOne({ _id: userId },
             {
                 $set: {
-                    ['addresses.$.name']: address.name,
-                    ['addresses.$.address']: address.address,
+                    [key1]: address.name,
+                    [key2]: address.address
                 }
             })
         res.status(200).json(updatedUser.addresses)
