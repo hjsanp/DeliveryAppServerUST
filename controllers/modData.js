@@ -5,9 +5,14 @@ const { ObjectId } = require('mongodb');
 
 
 exports.addAddress = async (req, res, next) => {
-    const { name, address, userId } = req.body
+    let { name, address, userId } = req.body
     try {
         const user = await User.findById(userId)
+        if (name.length === 0 || !name.length) {
+            let len = user.addresses.length
+            if (len == 0) len = ''
+            name = 'Address ' + len
+        }
         user.addresses.push({ name, address })
         const modUser = await user.save()
         res.status(200).json(modUser.addresses)
