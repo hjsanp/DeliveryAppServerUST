@@ -81,21 +81,11 @@ exports.editAddress = async (req, res, next) => {
     try {
 
         const user = await User.findById(userId)
-
-        const tmp = user.addresses
-        let idx = 0;
-        for (let i = 0; i < tmp.length; i++) {
-            if (tmp._id == address._id) {
-                idx = 0;
-                break
-            }
-        }
-
-        const updatedUser = await User.updateOne({ _id: userId },
+        const updatedUser = await user.updateOne({ 'addresses._id': address._id },
             {
                 $set: {
-                    [`addressses.${idx}.name`]: address.name,
-                    [`addressses.${idx}.address`]: address.address,
+                    ['addressses.$.name']: address.name,
+                    ['addressses.$.address']: address.address,
                 }
             })
         res.status(200).json(updatedUser.addresses)
