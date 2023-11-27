@@ -77,18 +77,27 @@ exports.getFavorites = async (req, res, next) => {
     }
 }
 exports.editAddress = async (req, res, next) => {
-    const { userId, address, idx } = req.body
+    const { userId, address } = req.body
     try {
 
+        const user = await User.findById(userId)
+
+        const tmp = user.addresses
+        let idx = 0;
+        for (let i = 0; i < tmp.length; i++) {
+            if (tmp._id == address._id) {
+                idx = 0;
+                break
+            }
+        }
 
         const updatedUser = await User.updateOne({ _id: userId },
             {
                 $set: {
-                    [`addressses.&{idx}.name`]: address.name,
-                    [`addressses.&{idx}.address`]: address.address,
+                    [`addressses.${idx}.name`]: address.name,
+                    [`addressses.${idx}.address`]: address.address,
                 }
             })
-        const user = await User.findById(userId)
         res.status(200).json(user.addresses)
     } catch (err) {
         next(err)
