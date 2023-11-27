@@ -80,7 +80,6 @@ exports.editAddress = async (req, res, next) => {
     const { userId, address } = req.body
     try {
 
-        const user = await User.find(userId)
         const updatedUser = await user.updateOne({ addresses: { $elemMatch: { _id: address._id } } },
             {
                 $set: {
@@ -88,6 +87,7 @@ exports.editAddress = async (req, res, next) => {
                     ['addresses.$.address']: address.address,
                 }
             })
+        const user = await User.findById(userId)
         res.status(200).json(updatedUser.addresses)
     } catch (err) {
         next(err)
