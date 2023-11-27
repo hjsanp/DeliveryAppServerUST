@@ -1,6 +1,6 @@
 const User = require('../models/User')
 const ErrorResponse = require('../utils/errorResponse')
-const mongoose = require('mongoose')
+const { ObjectId } = require('mongodb');
 
 
 
@@ -85,7 +85,7 @@ exports.editAddress = async (req, res, next) => {
         const tmp = [...user.addresses]
         let idx = 0;
         for (let i = 0; i < tmp.length; i++) {
-            if (tmp[i]._id === mongoose.Types.ObjectId(userId)) {
+            if (tmp[i]._id === ObjectId(userId)) {
                 idx = i
                 break
             }
