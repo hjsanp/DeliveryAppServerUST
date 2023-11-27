@@ -81,11 +81,11 @@ exports.editAddress = async (req, res, next) => {
     try {
 
         const user = await User.findById(userId)
-        const updatedUser = await user.updateOne({ 'addresses._id': address._id },
+        const updatedUser = await user.updateOne({ [addresses['_id']]: address._id },
             {
                 $set: {
-                    ['addressses.$.name']: address.name,
-                    ['addressses.$.address']: address.address,
+                    ['addresses.$.name']: address.name,
+                    ['addresses.$.address']: address.address,
                 }
             })
         res.status(200).json(updatedUser.addresses)
