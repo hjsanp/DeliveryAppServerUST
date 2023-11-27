@@ -85,7 +85,7 @@ exports.editAddress = async (req, res, next) => {
         const tmp = [...user.addresses]
         let idx = 0;
         for (let i = 0; i < tmp.length; i++) {
-            if (tmp[i]._id === ObjectId(userId)) {
+            if (tmp[i]._id == userId) {
                 idx = i
                 break
             }
