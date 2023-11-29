@@ -9,8 +9,7 @@ exports.addAddress = async (req, res, next) => {
     try {
         const user = await User.findById(userId)
         if (name.length === 0 || !name.length) {
-            let len = user.addresses.length
-            if (len == 0) len = ''
+            let len = user.addresses.length + 1
             name = 'Address ' + len
         }
         user.addresses.push({ name, address })
