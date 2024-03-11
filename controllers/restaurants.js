@@ -7,9 +7,9 @@ const ErrorResponse = require('../utils/errorResponse')
 exports.register = async (req, res, next) => {
     // const { password, firstName, lastName, phoneNumber, imageURI, age } = req.body
     try {
-        console.log('file', req.file);
+        console.log('file', req.files);
         console.log('body', req.body);
-        res.json({files: {...req.file}, body: {...req.body}})
+        res.json({files: {...req.files}, body: {...req.body}})
     } catch (err) {
         next(err)
     }
