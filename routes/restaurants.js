@@ -4,7 +4,7 @@ const multer = require('multer');
 const { storage } = require('../cloudinary');
 const upload = multer({ storage });
 
-const { login, register } = require('../controllers/authenticate')
+const { login, register } = require('../controllers/restaurants')
 
 router.route('/register').post(upload.single('image'), register)
 
