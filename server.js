@@ -19,6 +19,7 @@ app.get('/', (req, res) => {
 
 app.use('/foodDelivery/api/auth', require('./routes/authenticate'))
 app.use('/foodDelivery/api/data', require('./routes/modData'))
+app.use('/foodDelivery/api/restaurants', require('./routes/restaurants'))
 
 app.use(errorHandler)
 
