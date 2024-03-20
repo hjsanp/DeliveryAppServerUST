@@ -8,10 +8,8 @@ exports.register = async (req, res, next) => {
     const { path } = req.file
 
     try {
-        console.log('file', req.file);
-        console.log('body', req.body);
-        res.json({file: {...req.file}, body: {...req.body}})
         const newRestaurant = await Restaurant.create({...req.body, path})
+        console.log(newRestaurant, address)
         res.status(201).json({...newRestaurant, id: newRestaurant._id})
     } catch (err) {
         next(err)
