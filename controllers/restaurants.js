@@ -10,7 +10,10 @@ exports.register = async (req, res, next) => {
     try {
         const newRestaurant = await Restaurant.create({...req.body, img: path})
         console.log(newRestaurant, address)
-        res.status(201).json({...newRestaurant, id: newRestaurant._id})
+        const info = {
+            phoneNumber, address, name, id: newRestaurant._id, img: path
+        }
+        res.status(201).json({info})
     } catch (err) {
         next(err)
     }
@@ -30,8 +33,14 @@ exports.login = async (req, res, next) => {
         const isMatched = await restaurant.matchPasswords(password)
 
         if (!isMatched) return next(new ErrorResponse('Invalid phone number and password.', 401))
-        
-        res.status(200).json({...restaurant, id: restaurant._id})
+        const info = {
+            phoneNumber, 
+            id: restaurant._id, 
+            address: restaurant.address, 
+            name: restaurant.baseModelName, 
+            img: restaurant.img,
+        }
+        res.status(200).json({info})
     } catch (err) {
         next(err)
     }
