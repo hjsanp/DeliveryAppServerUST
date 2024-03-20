@@ -7,7 +7,7 @@ const RestaurantSchema = new mongoose.Schema({
         required: [true, 'Provide a restaurant name']
     },
     phoneNumber: {
-        type: Number,
+        type: String,
         reqired: [true, 'Provide a mobile number.'],
         unique: true
     },
