@@ -29,7 +29,7 @@ exports.login = async (req, res, next) => {
         const restaurant = await Restaurant.findOne({ phoneNumber }).select('+password')
 
         if (!restaurant) return next(new ErrorResponse('Invalid phone number and password.', 401))
-
+        console.log('After phonenum')
         const isMatched = await restaurant.matchPasswords(password)
 
         if (!isMatched) return next(new ErrorResponse('Invalid phone number and password.', 401))
@@ -40,7 +40,7 @@ exports.login = async (req, res, next) => {
             name: restaurant.baseModelName, 
             img: restaurant.img,
         }
-        res.status(200).json({info})
+        res.status(200).json(info)
     } catch (err) {
         next(err)
     }
