@@ -21,7 +21,7 @@ exports.register = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
     const { phoneNumber, password } = req.body
-
+    console.log('LOGIN', req.body)
     if (!phoneNumber || !password) return next(new ErrorResponse('Provide an email and a password', 400))
 
 
