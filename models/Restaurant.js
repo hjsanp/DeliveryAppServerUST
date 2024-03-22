@@ -47,7 +47,7 @@ RestaurantSchema.pre('save', async function(next){
 })
 
 RestaurantSchema.methods.matchPasswords = async function(password) {
-    return await bcrypt.compare(this.password, password)
+    return await bcrypt.compare(password, this.password)
 }
 
 
