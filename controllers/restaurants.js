@@ -112,8 +112,8 @@ exports.getFoodInfo = async (req, res, next) => {
         const foundRestaurant = await Restaurant.findById(restaurantId)
         let foundFood;
         const newFoodId = _id = new mongoose.Types.ObjectId(foodId);
-        console.log(typeof food._id, food._id, typeof foodId, foodId)
         foundRestaurant.foods.forEach(food => {
+            console.log(typeof food._id, food._id, typeof foodId, foodId)
             if(food._id == foodId) {
                 console.log("Food found")
                 foundFood = food 
