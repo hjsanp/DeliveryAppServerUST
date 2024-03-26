@@ -19,6 +19,7 @@ exports.register = async (req, res, next) => {
     }
 }
 
+
 exports.login = async (req, res, next) => {
     const { phoneNumber, password } = req.body
     console.log('LOGIN', req.body)
@@ -47,5 +48,22 @@ exports.login = async (req, res, next) => {
 }
 
 // add Food
+exports.addFood = async (req, res, next) => {
+    const { price, desc, name, restaurantId } = req.body
+    const { path } = req.file
 
+    try {
+        const foundRestaurant = await Restaurant.findById(restaurantId)
+        console.log(foundRestaurant)
+        const newFood = {
+            name, desc, price,
+            img: path
+        }
+        foundRestaurant.foods.push(newFood)
+        const modRestaurant = await foundRestaurant.save()
+        res.status(201).json(modRestaurant.foods)
+    } catch (err) {
+        next(err)
+    }
+}
 
