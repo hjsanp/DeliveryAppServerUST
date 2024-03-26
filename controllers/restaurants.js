@@ -38,7 +38,7 @@ exports.login = async (req, res, next) => {
             phoneNumber, 
             id: restaurant._id, 
             address: restaurant.address, 
-            name: restaurant.baseModelName, 
+            name: restaurant.name, 
             img: restaurant.img,
         }
         res.status(200).json(info)
@@ -66,4 +66,61 @@ exports.addFood = async (req, res, next) => {
         next(err)
     }
 }
+
+
+exports.addAddOns = async (req, res, next) => {
+    const { price, name, restaurantId, foodId } = req.body
+    const { path } = req.file
+
+    try {
+        const foundRestaurant = await Restaurant.findById(restaurantId)
+        console.log(foundRestaurant)
+        const newAddOn = {
+            name, price,
+            img: path
+        }
+        foundRestaurant.foods.forEach(food => {
+            if(food.id == foodId) {
+                console.log("Food Id match")
+                food.addOns.push(newAddOn)
+            }
+        })
+        const modRestaurant = await foundRestaurant.save()
+        res.status(201).json(modRestaurant.foods)
+    } catch (err) {
+        next(err)
+    }
+}
+
+exports.getMenu = async (req, res, next) => {
+    const { restaurantId } = req.body
+
+    try {
+        const foundRestaurant = await Restaurant.findById(restaurantId)
+        res.status(200).json(foundRestaurant.foods)
+    } catch (err) {
+        next(err)
+    }
+}
+
+exports.getFoodInfo = async (req, res, next) => {
+    const { restaurantId, foodId } = req.body
+
+    try {
+        const foundRestaurant = await Restaurant.findById(restaurantId)
+        let foundFood;
+        foundRestaurant.foods.forEach(food => {
+            if(food.id == foodId) {
+                console.log("Food found")
+                foundFood = food 
+            }
+        })
+
+        res.status(200).json(foundFood)
+    } catch (err) {
+        next(err)
+    }
+}
+
+
 
