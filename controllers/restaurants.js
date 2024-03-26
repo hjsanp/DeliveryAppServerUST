@@ -51,7 +51,7 @@ exports.login = async (req, res, next) => {
 exports.addFood = async (req, res, next) => {
     const { price, desc, name, restaurantId } = req.body
     const { path } = req.file
-
+    
     try {
         const foundRestaurant = await Restaurant.findById(restaurantId)
         console.log(foundRestaurant)
@@ -76,12 +76,13 @@ exports.addAddOns = async (req, res, next) => {
     try {
         const foundRestaurant = await Restaurant.findById(restaurantId)
         console.log(foundRestaurant)
+        const newFoodId = _id = new mongoose.Types.ObjectId(foodId);
         const newAddOn = {
             name, price,
             img: path
         }
         foundRestaurant.foods.forEach(food => {
-            if(food.id == foodId) {
+            if(food._id === newFoodId) {
                 console.log("Food Id match")
                 food.addOns.push(newAddOn)
             }
@@ -110,8 +111,9 @@ exports.getFoodInfo = async (req, res, next) => {
     try {
         const foundRestaurant = await Restaurant.findById(restaurantId)
         let foundFood;
+        const newFoodId = _id = new mongoose.Types.ObjectId(foodId);
         foundRestaurant.foods.forEach(food => {
-            if(food.id == foodId) {
+            if(food._id === newFoodId) {
                 console.log("Food found")
                 foundFood = food 
             }
