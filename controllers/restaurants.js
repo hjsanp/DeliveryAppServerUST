@@ -69,7 +69,7 @@ exports.addFood = async (req, res, next) => {
 }
 
 
-exports.addAddOns = async (req, res, next) => {
+exports.addAddOn = async (req, res, next) => {
     const { price, name, restaurantId, foodId } = req.body
     const { path } = req.file
 

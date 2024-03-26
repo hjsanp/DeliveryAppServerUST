@@ -31,7 +31,13 @@ const RestaurantSchema = new mongoose.Schema({
             desc: String,
             img: String,
             price: Number,
-            addOns: []
+            addOns: [
+                {
+                    name: String,
+                    img: String,
+                    price: String
+                }
+            ]
         }
     ]
 
