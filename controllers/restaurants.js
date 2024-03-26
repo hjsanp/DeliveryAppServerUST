@@ -113,7 +113,7 @@ exports.getFoodInfo = async (req, res, next) => {
         let foundFood;
         const newFoodId = _id = new mongoose.Types.ObjectId(foodId);
         foundRestaurant.foods.forEach(food => {
-            if(food._id === newFoodId) {
+            if(food._id === foodId) {
                 console.log("Food found")
                 foundFood = food 
             }
