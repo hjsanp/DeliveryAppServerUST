@@ -59,7 +59,8 @@ exports.addFood = async (req, res, next) => {
             name, desc, price,
             img: path
         }
-        foundRestaurant.foods.push(newFood)
+        if(foundRestaurant.foods?.length) foundRestaurant.foods.push(newFood)
+        else foundRestaurant.foods = [newFood]
         const modRestaurant = await foundRestaurant.save()
         res.status(201).json(modRestaurant.foods)
     } catch (err) {
