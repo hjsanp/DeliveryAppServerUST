@@ -71,7 +71,7 @@ exports.deleteFood = async (req, res, next) => {
     const { restaurantId, foodId } = req.body
     
     try {
-        const deletedFood = await Restaurant.update({_id: restaurantId}, {$pull: {'foods._id': foodId}})
+        const deletedFood = await Restaurant.updateOne({_id: restaurantId}, {$pull: {'foods._id': foodId}})
         const restaurant = await Restaurant.findById(restaurantId)
         res.status(201).json(restaurant.foods)
     } catch (err) {
@@ -109,7 +109,7 @@ exports.deleteAddOn = async (req, res, next) => {
     try {
         
         
-        const updatedRestaurant = await Restaurant.update(
+        const updatedRestaurant = await Restaurant.updateOne(
             {_id: restaurantId, foods: {_id: foodId}}, 
             {$pull: {'foods.$.addOns': {_id: addOnId}}})
             const restaurant = await Restaurant.findById(restaurantId)
