@@ -67,6 +67,17 @@ exports.addFood = async (req, res, next) => {
         next(err)
     }
 }
+exports.deleteFood = async (req, res, next) => {
+    const { restaurantId, foodId } = req.body
+    
+    try {
+        const deletedFood = await Restaurant.update({_id: restaurantId}, {$pull: {'foods._id': foodId}})
+        const restaurant = await Restaurant.findById(restaurantId)
+        res.status(201).json(restaurant.foods)
+    } catch (err) {
+        next(err)
+    }
+}
 
 
 exports.addAddOn = async (req, res, next) => {
@@ -88,6 +99,22 @@ exports.addAddOn = async (req, res, next) => {
         })
         const modRestaurant = await foundRestaurant.save()
         res.status(201).json(modRestaurant.foods)
+    } catch (err) {
+        next(err)
+    }
+}
+exports.deleteAddOn = async (req, res, next) => {
+    const {restaurantId, foodId, addOnId } = req.body
+
+    try {
+        
+        
+        const updatedRestaurant = await Restaurant.update(
+            {_id: restaurantId, foods: {_id: foodId}}, 
+            {$pull: {'foods.$.addOns': {_id: addOnId}}})
+            const restaurant = await Restaurant.findById(restaurantId)
+            console.log('UPDATED RESTAURANT', restaurant)
+        res.status(201).json(restaurant.foods)
     } catch (err) {
         next(err)
     }
