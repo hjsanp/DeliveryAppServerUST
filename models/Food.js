@@ -10,7 +10,7 @@ const FoodSchema = new mongoose.Schema({
         {
             name: String,
             img: String,
-            price: String
+            price: Number
         }
     ]
 })

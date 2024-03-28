@@ -91,7 +91,7 @@ exports.addAddOn = async (req, res, next) => {
     try {
         const food = await Food.findById(foodId)
         const newAddOn = {
-            name, price,
+            name, price: Number(price),
             img: path
         }
         food.addOns.push(newAddOn)
