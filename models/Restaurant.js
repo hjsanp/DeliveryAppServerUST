@@ -26,19 +26,7 @@ const RestaurantSchema = new mongoose.Schema({
         required: [true, 'Provide the restaurant address']
     },
     foods: [
-        {
-            name: String,
-            desc: String,
-            img: String,
-            price: Number,
-            addOns: [
-                {
-                    name: String,
-                    img: String,
-                    price: String
-                }
-            ]
-        }
+        { type: mongoose.Schema.Types.ObjectId, ref: 'Food' }
     ]
 
 })

@@ -1,6 +1,7 @@
 const Restaurant = require('../models/Restaurant')
+const Food = require('../models/Food')
 const ErrorResponse = require('../utils/errorResponse')
-const mongoose = require('mongoose')
+
 
 
 exports.register = async (req, res, next) => {
@@ -57,11 +58,12 @@ exports.addFood = async (req, res, next) => {
         console.log(foundRestaurant)
         const newFood = {
             name, desc, price,
-            img: path
+            restaurantId,
+            img: path,
         }
-        if(foundRestaurant.foods?.length) foundRestaurant.foods.push(newFood)
-        else foundRestaurant.foods = [newFood]
-        const modRestaurant = await foundRestaurant.save()
+        const createFood = await Food.create(newFood)
+        foundRestaurant.foods.push(createFood._id)
+        const modRestaurant = (await foundRestaurant.save()).populate('foods')
         res.status(201).json(modRestaurant.foods)
     } catch (err) {
         next(err)
@@ -140,17 +142,19 @@ exports.getFoodInfo = async (req, res, next) => {
     const { restaurantId, foodId } = req.body
 
     try {
-        const foundRestaurant = await Restaurant.findById(restaurantId)
-        let foundFood;
-        foundRestaurant.foods.forEach(food => {
-            console.log(typeof food._id, food._id, typeof foodId, foodId)
-            if(food._id == foodId) {
-                console.log("Food found")
-                foundFood = food 
-            }
-        })
-
+        const foundFood = await Food.findById(foodId)
         res.status(200).json(foundFood)
+    } catch (err) {
+        next(err)
+    }
+}
+
+exports.getRestaurants = async (req, res, next) => {
+
+    try {
+        const restaurants = await Restaurant.find()
+
+        res.status(200).json(restaurants)
     } catch (err) {
         next(err)
     }
