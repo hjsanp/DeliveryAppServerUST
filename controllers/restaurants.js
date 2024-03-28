@@ -63,7 +63,8 @@ exports.addFood = async (req, res, next) => {
         }
         const createFood = await Food.create(newFood)
         foundRestaurant.foods.push(createFood._id)
-        const modRestaurant = (await foundRestaurant.save()).populate('foods')
+        await foundRestaurant.save()
+        const modRestaurant = await Restaurant.findById(restaurantId).populate('foods')
         res.status(201).json(modRestaurant.foods)
     } catch (err) {
         next(err)
@@ -131,7 +132,7 @@ exports.getMenu = async (req, res, next) => {
     const { restaurantId } = req.body
 
     try {
-        const foundRestaurant = await Restaurant.findById(restaurantId)
+        const foundRestaurant = await Restaurant.findById(restaurantId).populate('foods')
         res.status(200).json(foundRestaurant.foods)
     } catch (err) {
         next(err)
@@ -152,7 +153,7 @@ exports.getFoodInfo = async (req, res, next) => {
 exports.getRestaurants = async (req, res, next) => {
 
     try {
-        const restaurants = await Restaurant.find()
+        const restaurants = await Restaurant.find().populate('foods')
 
         res.status(200).json(restaurants)
     } catch (err) {
