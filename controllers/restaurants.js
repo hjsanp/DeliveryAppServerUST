@@ -74,9 +74,10 @@ exports.deleteFood = async (req, res, next) => {
     const { restaurantId, foodId } = req.body
     
     try {
-        const deletedFood = await Restaurant.updateOne({_id: restaurantId}, {$pull: {foods: {_id:foodId}}})
-        const restaurant = await Restaurant.findById(restaurantId)
-        res.status(201).json(restaurant.foods)
+        const deletedRestaurantFood = await Restaurant.updateOne({_id: restaurantId}, {$pull: {foods: {$in: [foodId] }}})
+        const deleteFood = await Food.findByIdAndDelete(foodId)
+        const restaurant = await Restaurant.findById(restaurantId).populate('foods')
+        res.status(200).json(restaurant.foods)
     } catch (err) {
         next(err)
     }
@@ -88,20 +89,15 @@ exports.addAddOn = async (req, res, next) => {
     const { path } = req.file
 
     try {
-        const foundRestaurant = await Restaurant.findById(restaurantId)
-        console.log(foundRestaurant)
+        const food = await Food.findById(foodId)
         const newAddOn = {
             name, price,
             img: path
         }
-        foundRestaurant.foods.forEach(food => {
-            if(food._id == foodId) {
-                console.log("Food Id match")
-                food.addOns.push(newAddOn)
-            }
-        })
-        const modRestaurant = await foundRestaurant.save()
-        res.status(201).json(modRestaurant.foods)
+        food.addOns.push(newAddOn)
+        await food.save()
+        const foundRestaurant = await Restaurant.findById(restaurantId).populate('foods')
+        res.status(201).json(foundRestaurant.foods)
     } catch (err) {
         next(err)
     }
@@ -110,18 +106,13 @@ exports.deleteAddOn = async (req, res, next) => {
     const {restaurantId, foodId, addOnId } = req.body
 
     try {
-        const deleteAddOn = await Restaurant.updateOne(
+        const deleteAddOn = await Food.updateOne(
             {
-                _id: restaurantId, 
-                foods: {
-                    $elemMatch: {
-                        _id: foodId
-                    }
-                }
+                _id: foodId, 
             }, 
-            {$pull: {'foods.$.addOns': {_id: addOnId}}})
-            const restaurant = await Restaurant.findById(restaurantId)
-            console.log('UPDATED RESTAURANT', restaurant)
+            {$pull: {addOns: {_id: addOnId}}})
+        const restaurant = await Restaurant.findById(restaurantId).populate('foods')
+        console.log('UPDATED RESTAURANT', restaurant)
         res.status(201).json(restaurant.foods)
     } catch (err) {
         next(err)
