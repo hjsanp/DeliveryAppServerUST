@@ -5,7 +5,8 @@ const { storage } = require('../cloudinary');
 const upload = multer({ storage });
 
 const { login, register, addFood, addAddOn, 
-    getFoodInfo, getMenu, deleteAddOn, deleteFood, getRestaurants 
+    getFoodInfo, getMenu, deleteAddOn, deleteFood, 
+    getRestaurants, getRestaurantInfo
 } = require('../controllers/restaurants')
 
 router.route('/login').post(login)
@@ -21,5 +22,6 @@ router.route('/deleteAddOn').post(deleteAddOn)
 router.route('/deleteFood').post(deleteFood) 
 
 router.route('/getRestaurants').post(getRestaurants)
+router.route('/getRestaurantInfo').post(getRestaurantInfo)
 
 module.exports = router 
