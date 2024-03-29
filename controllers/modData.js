@@ -134,4 +134,15 @@ exports.deleteAddress = async (req, res, next) => {
     }
 }
 
+exports.getDeliveryInfo = async (req, res, next) => {
+    const { deliveryId } = req.body
+    try {
+        const delivery = await Order.findById(deliveryId)
+        res.status(200).json(delivery)
+    } catch (err) {
+        next(err)
+        console.log(err)
+    }
+}
+
 
