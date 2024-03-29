@@ -3,9 +3,12 @@ const mongoose = require('mongoose')
 const OrderSchema = new mongoose.Schema({
     restaurantId: { type: mongoose.Schema.Types.ObjectId, ref: 'Restaurant' },
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    deliverTo: String,
-    dateOrdered: String,
-    arrivalTime: String,
+    deliverTo: {
+        addressId: mongoose.Schema.Types.ObjectId,
+        address: String
+    },
+    dateOrdered: Date,
+    arrivalTime: Date,
     deliveryFee: Number,
     totalAddOnsAmount: Number,
     finalPrice: Number,
@@ -17,6 +20,11 @@ const OrderSchema = new mongoose.Schema({
         default: {}
     },
     addOns: {
+        type: Map,
+        of: {},
+        default: {}
+    },
+    paymentOption: {
         type: Map,
         of: {},
         default: {}
