@@ -41,7 +41,9 @@ const UserSchema = new mongoose.Schema({
         of: {},
         default: {}
     },
-    orders: []
+    orders: [
+        { type: mongoose.Schema.Types.ObjectId, ref: 'Order' }
+    ]
     // {
     //     name: String,
     //     totalItems: Number,

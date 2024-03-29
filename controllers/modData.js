@@ -1,6 +1,8 @@
 const User = require('../models/User')
 const ErrorResponse = require('../utils/errorResponse')
 const { ObjectId } = require('mongodb');
+const Order = require('../models/Order')
+const Restaurant = require('../models/Restaurant')
 
 
 
@@ -36,9 +38,15 @@ exports.getAddresses = async (req, res, next) => {
 exports.submitOrder = async (req, res, next) => {
     const { order, userId } = req.body
     try {
+        const newOrder = await Order.create({...order, userId})
+        console.log('/data/submitOrder', newOrder)
         const user = await User.findById(userId)
-        user.orders.push(order)
-        const modUser = await user.save()
+        const restaurant = await Restaurant.findById(order.restaurantId)
+        user.orders.push(newOrder._id)
+        restaurant.orders.push(newOrder._id)
+        await user.save()
+        await user.save()
+        const modUser = await User.findById(userId).populate('orders')
         res.status(200).json(modUser.orders)
     } catch (err) {
         next(err)

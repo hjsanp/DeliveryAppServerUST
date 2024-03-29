@@ -27,6 +27,9 @@ const RestaurantSchema = new mongoose.Schema({
     },
     foods: [
         { type: mongoose.Schema.Types.ObjectId, ref: 'Food' }
+    ],
+    orders: [
+        { type: mongoose.Schema.Types.ObjectId, ref: 'Order' }
     ]
 
 })
