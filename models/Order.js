@@ -14,6 +14,7 @@ const OrderSchema = new mongoose.Schema({
     finalPrice: Number,
     discountedPrice: Number,
     img: String,
+    restaurantName: String,
     cart: {
         type: Map,
         of: {},
