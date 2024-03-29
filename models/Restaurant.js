@@ -14,7 +14,7 @@ const RestaurantSchema = new mongoose.Schema({
     password: {
         type: String,
         required: [true, 'Provide a password'],
-        minlength: 6,
+        minlength: [6, 'Min. of 6 characters'],
         select: false
     },
     img: {
@@ -30,7 +30,8 @@ const RestaurantSchema = new mongoose.Schema({
     ],
     orders: [
         { type: mongoose.Schema.Types.ObjectId, ref: 'Order' }
-    ]
+    ],
+    duration: {type: Number, default: 30}
 
 })
 
