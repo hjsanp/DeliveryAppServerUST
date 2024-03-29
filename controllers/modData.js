@@ -69,7 +69,7 @@ exports.toggleFavorite = async (req, res, next) => {
     let { userId, favorite } = req.body
     try {
         const user = await User.findById(userId)
-        const favoriteId = String(favorite.id)
+        const favoriteId = String(favorite._id)
         if (user.favorites.get(favoriteId)) favorite = false
         user.favorites.set(favoriteId, favorite)
         const updatedUser = await user.save()
