@@ -163,5 +163,16 @@ exports.getRestaurants = async (req, res, next) => {
     }
 }
 
+exports.getFoods = async (req, res, next) => {
+
+    try {
+        const foods = await Food.find().populate('restaurantId')
+
+        res.status(200).json(foods)
+    } catch (err) {
+        next(err)
+    }
+}
+
 
 

@@ -6,7 +6,7 @@ const upload = multer({ storage });
 
 const { login, register, addFood, addAddOn, 
     getFoodInfo, getMenu, deleteAddOn, deleteFood, 
-    getRestaurants, getRestaurantInfo
+    getRestaurants, getRestaurantInfo, getFoods
 } = require('../controllers/restaurants')
 
 router.route('/login').post(login)
@@ -23,5 +23,6 @@ router.route('/deleteFood').post(deleteFood)
 
 router.route('/getRestaurants').post(getRestaurants)
 router.route('/getRestaurantInfo').post(getRestaurantInfo)
+router.route('/getFoods').post(getFoods)
 
 module.exports = router 
