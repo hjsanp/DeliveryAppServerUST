@@ -45,7 +45,7 @@ exports.submitOrder = async (req, res, next) => {
         user.orders.push(newOrder._id)
         restaurant.orders.push(newOrder._id)
         await user.save()
-        await user.save()
+        await restaurant.save()
         const modUser = await User.findById(userId).populate('orders')
         res.status(200).json(modUser.orders)
     } catch (err) {
