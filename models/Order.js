@@ -10,6 +10,7 @@ const OrderSchema = new mongoose.Schema({
     totalAddOnsAmount: Number,
     finalPrice: Number,
     discountedPrice: Number,
+    img: String,
     cart: {
         type: Map,
         of: {},
