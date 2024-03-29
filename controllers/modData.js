@@ -137,7 +137,7 @@ exports.deleteAddress = async (req, res, next) => {
 exports.getDeliveryInfo = async (req, res, next) => {
     const { deliveryId } = req.body
     try {
-        const delivery = await Order.findById(deliveryId)
+        const delivery = await Order.findById(deliveryId).populate('restaurantId')
         res.status(200).json(delivery)
     } catch (err) {
         next(err)
