@@ -57,7 +57,7 @@ exports.submitOrder = async (req, res, next) => {
 exports.getOrders = async (req, res, next) => {
     const { userId } = req.body
     try {
-        const user = await User.findById(userId)
+        const user = await User.findById(userId).populate('orders')
         res.status(200).json(user.orders)
     } catch (err) {
         next(err)
